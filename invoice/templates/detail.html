@@ -36,14 +36,16 @@
                                 {% comment %} <td>#</td> {% endcomment %}
                                 <td>Description</td>
                                 <td>Quantity</td>
-                                <td class="text-center">Amount</td>
+                                <td>Unit Price</td>
+                                <td class="text-center">Total Amount</td>
                             </tr>
-                            {% for item in invoice.proudct_set.all %}
+                            {% for item in invoice.items.all %}
                             <tr class="content">
                                 {% comment %} <td></td> {% endcomment %}
-                                <td>{{proudct.name}}/td>
-                                <td>{{proudct.quantity}}</td>
-                                <td class="text-center">₹{{proudct.total}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.unit_price}}</td>
+                                <td class="text-center">₹{{item.total}}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -57,7 +59,7 @@
                                 <td class="text-center">Total</td>
                             </tr>
                             <tr class="content">
-                                <td class="text-center">₹{{invoice.total}}</td>
+                                <td class="text-center">₹ {{invoice.total}}</td>
                             </tr>
                         </tbody>
                     </table>

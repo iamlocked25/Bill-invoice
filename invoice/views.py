@@ -41,20 +41,17 @@ def create(request):
         if order_formset.is_valid() and invoice_form.is_valid():
             invoice = invoice_form.save()
             
-            # new_orders = []
-            # for order_form in order_formset:
-            #     new_orders.append(Item(invoice.id))
-            #     description = order_form.cleaned_data['description']
-            #     unit_price = order_form.cleaned_data['unit_price']
-            #     quantity = order_form.cleaned_data['quantity']
-            #     item = Item(
-            #         invoice=invoice,
-            #         description=description,
-            #         unit_price=unit_price,
-            #         quantity=quantity
-            #     )
-            #     new_orders.append(item)
-            # Item.objects.bulk_create(new_orders)
+            for order_form in order_formset:
+                description = order_form.cleaned_data['description']
+                unit_price = order_form.cleaned_data['unit_price']
+                quantity = order_form.cleaned_data['quantity']
+                item = Item(
+                    invoice=invoice,
+                    description=description,
+                    unit_price=unit_price,
+                    quantity=quantity
+                )
+                item.save()
             return redirect("display", invoice_id=invoice.id)
 
     template_context = {
