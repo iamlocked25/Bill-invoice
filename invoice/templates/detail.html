@@ -1,0 +1,70 @@
+{% extends "base_template.html" %} 
+{% block head_title %}Invoice #{{ invoice.id }} - {{ invoice.buyer_name}}{% endblock head_title %}
+{% block content %}
+<div class="container mt-5 mb-3">
+    <div class=""></div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="d-flex flex-row p-2 mt-2">
+                    <div class="d-flex flex-column"> 
+                        <span class="font-weight-bold">Tax Invoice</span>
+                        <small>INV-#{{invoice.id}}</small>
+                        <small>{{invoice.date}}</small>
+                    </div>
+                </div>
+                <hr>
+                <div class="table-responsive p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td>To</td>
+                                <td>From</td>
+                            </tr>
+                            <tr class="content">
+                                <td class="font-weight-bold">{{invoice.seller_name}} <br>{{invoice.seller_address}} <br>{{invoice.seller_mobile}}</td>
+                                <td class="font-weight-bold">{{invoice.buyer_name}} <br>{{invoice.buyer_address}} <br>{{invoice.buyer_mobile}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="products p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                {% comment %} <td>#</td> {% endcomment %}
+                                <td>Description</td>
+                                <td>Quantity</td>
+                                <td class="text-center">Amount</td>
+                            </tr>
+                            {% for item in invoice.proudct_set.all %}
+                            <tr class="content">
+                                {% comment %} <td></td> {% endcomment %}
+                                <td>{{proudct.name}}/td>
+                                <td>{{proudct.quantity}}</td>
+                                <td class="text-center">₹{{proudct.total}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="products p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td class="text-center">Total</td>
+                            </tr>
+                            <tr class="content">
+                                <td class="text-center">₹{{invoice.total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

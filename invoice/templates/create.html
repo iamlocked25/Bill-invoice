@@ -1,0 +1,107 @@
+{% extends "base_template.html" %}
+{% load bootstrap5 %}
+
+{% block style %} .container main {
+max-width: 960px; } .bd-placeholder-img { font-size: 1.125rem; text-anchor:
+middle; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+@media (min-width: 768px) { .bd-placeholder-img-lg { font-size: 3.5rem; } } 
+{% endblock style %} 
+{% block content %}
+<main>
+  <div class="py-5 text-center">
+    <h2>Invoice</h2>
+  </div>
+  <form method="post" action="{% url 'create' %}" class="needs-validation" novalidate>
+		{% csrf_token %}
+    <h4 class="mb-3">Detail</h4>
+    {% bootstrap_form invoice_form layout='horizontal' %}
+    <hr class="my-4" />
+    <div id="item_content">
+      <h4 class="mb-3">Cart</h4>
+      {% bootstrap_formset order_formset layout='horizontal' %}
+      </div>
+    <div class="p-2 text-right">
+      <button class="btn btn-sm btn-primary" onclick="addFields()" type="button">ADD</button>
+    </div>
+    <hr class="my-4" />
+    <button class="w-100 btn btn-primary btn-lg" type="submit">
+      Continue
+    </button>
+  </form>
+</main>
+<script type='text/javascript'>
+  var x = document.getElementById("id_form-TOTAL_FORMS").value;
+  var i = parseInt(x) - 1;
+  console.log("x: " + x);
+  console.log("i: " + i);
+  function addFields(){
+    i = parseInt(i) + 1;
+    var form1 = document.createElement("div");
+    form1.classList.add('col-12');
+    form1.classList.add('row');
+    // Container <div> where dynamic content will be placed
+    var container = document.getElementById("item_content");
+    // Create an <input> element, set its type and name attributes
+    var input = document.createElement("input");
+    input.type = "text";
+    input.name = "form-"+ i +"-description";
+    input.classList.add('form-control');
+
+    var label = document.createElement("label");
+    label.setAttribute("for", "id_form-"+ i +"-description");
+    label.innerHTML = "Item Name";
+    label.classList.add('form-label');
+
+    var subform = document.createElement("div");
+    subform.classList.add('col-4');
+    subform.appendChild(label);
+    subform.appendChild(input);
+    form1.appendChild(subform);
+
+    
+    // 2nd field
+    var input = document.createElement("input");
+    input.type = "number";
+    input.step = "0.01";
+    input.name = "form-"+ i +"-unit_price";
+    input.classList.add('form-control');
+
+    var label = document.createElement("label");
+    label.setAttribute("for", "id_form-"+i+"-unit_price");
+    label.innerHTML = "Unit Price";
+    label.classList.add('form-label');
+
+    var subform = document.createElement("div");
+    subform.classList.add('col-4');
+    subform.appendChild(label);
+    subform.appendChild(input);
+    form1.appendChild(subform);
+
+    // 3rd field
+    var input = document.createElement("input");
+    input.type = "number";
+    input.step = "0.01";
+    input.name = "form-"+ i +"-quantity";
+    input.id = "id_form-"+i+"-quantity";
+    input.value = "1"
+    input.classList.add('form-control');
+
+    var label = document.createElement("label");
+    label.setAttribute("for", "id_form-"+i+"-quantity");
+    label.innerHTML = "Quantity";
+    label.classList.add('form-label');
+
+
+    var subform = document.createElement("div");
+    subform.classList.add('col-4');
+    subform.appendChild(label);
+    subform.appendChild(input);
+    form1.appendChild(subform);
+    container.appendChild(form1);
+
+    size = document.getElementById("id_form-TOTAL_FORMS").value
+    document.getElementById("id_form-TOTAL_FORMS").setAttribute('value', parseInt(size) + 1);
+    console.log();
+  }
+</script>
+{% endblock content %}

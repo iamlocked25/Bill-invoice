@@ -1,0 +1,25 @@
+{% extends "base_template.html" %} {% block content %} 
+{% if latest_invoice_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Invoice No.</th>
+      <th scope="col">Buyer Name</th>
+      <th scope="col">Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for invoice in latest_invoice_list %}
+    <tr>
+        <td scope="row">{{ invoice.id }}</td>
+        <td>{{ invoice.buyer_name }}</td>
+        <td>{{ invoice.date }}</td>
+        <td><a class="btn btn-secondary btn-sm" href="/{{invoice.id}}/">View</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No Invoice are available.</p>
+{% endif %} {% endblock content %}
